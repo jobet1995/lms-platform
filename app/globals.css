@@ -1,27 +1,68 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #4f46e5;      /* Indigo 600 - More professional than standard 500 */
+  --color-primary-focus: #4338ca;
+  --color-secondary: #0ea5e9;    /* Sky 500 */
+  --color-accent: #f59e0b;       /* Amber 500 */
+  --color-neutral: #1f2937;      /* Gray 800 */
+  
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Force background matching */
+  --color-base-100: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme='dark'] {
+  --color-base-100: #0a0a0a;
 }
 
+/* Ensure Logo Visibility */
+.next-logo-themed {
+  filter: invert(0);
+  transition: filter 0.3s ease;
+}
+
+[data-theme='dark'] .next-logo-themed {
+  filter: invert(1);
+}
+
+/* Base style resets and layout fixes */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-sans);
+}
+
+/* Professional Glassmorphism & Header Logic */
+header {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(0px) saturate(100%);
+  border-bottom: 1px solid transparent;
+  will-change: background-color, backdrop-filter, box-shadow;
+  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+}
+
+.glass-nav {
+  background: color-mix(in srgb, var(--color-base-100) 70%, transparent) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-base-content) 5%, transparent) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+/* Smooth motion for advanced interactions */
+html {
+  scroll-behavior: smooth;
+}
+
+.transition-premium {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
