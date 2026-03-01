@@ -6,6 +6,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+  output   = "../lib/graphql/prisma-types.ts"
+}
+
 // --------------------------------------------------
 // ENUMS
 // --------------------------------------------------
@@ -610,6 +615,34 @@ model CourseTag {
   @@id([courseId, tagId])
   @@index([tagId])
 }
+
+model Author {
+  id        String     @id @default(uuid())
+  name      String
+  avatar    String?
+  posts     BlogPost[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model BlogPost {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  excerpt       String?  @db.Text
+  content       String   @db.Text
+  category      String   // Tutorial, Tech, Video, News
+  readTime      String?
+  featuredImage String?
+  authorId      String
+  author        Author   @relation(fields: [authorId], references: [id])
+  published     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([authorId])
+}
+
 
 model Webhook {
   id       String  @id @default(uuid())
