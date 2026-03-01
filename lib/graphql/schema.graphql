@@ -1,0 +1,43 @@
+type Blog {
+  id: ID!
+  title: String!
+  slug: String!
+  excerpt: String
+  content: String!
+  featuredImage: String
+  author: String
+  createdAt: String!
+  updatedAt: String
+  published: Boolean!
+}
+
+type Query {
+  blogs: [Blog!]!
+  blog(slug: String!): Blog
+  latestBlogs(limit: Int): [Blog!]!
+}
+
+type Mutation {
+  createBlog(
+    title: String!
+    slug: String!
+    excerpt: String
+    content: String!
+    featuredImage: String
+    author: String
+    published: Boolean!
+  ): Blog!
+
+  updateBlog(
+    id: ID!
+    title: String
+    slug: String
+    excerpt: String
+    content: String
+    featuredImage: String
+    author: String
+    published: Boolean
+  ): Blog!
+
+  deleteBlog(id: ID!): Blog!
+}

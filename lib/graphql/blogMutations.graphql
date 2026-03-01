@@ -1,0 +1,57 @@
+mutation CreateBlog(
+  $title: String!
+  $slug: String!
+  $excerpt: String
+  $content: String!
+  $featuredImage: String
+  $author: String
+  $published: Boolean!
+) {
+  createBlog(
+    title: $title
+    slug: $slug
+    excerpt: $excerpt
+    content: $content
+    featuredImage: $featuredImage
+    author: $author
+    published: $published
+  ) {
+    id
+    title
+    slug
+  }
+}
+
+mutation UpdateBlog(
+  $id: ID!
+  $title: String
+  $slug: String
+  $excerpt: String
+  $content: String
+  $featuredImage: String
+  $author: String
+  $published: Boolean
+) {
+  updateBlog(
+    id: $id
+    title: $title
+    slug: $slug
+    excerpt: $excerpt
+    content: $content
+    featuredImage: $featuredImage
+    author: $author
+    published: $published
+  ) {
+    id
+    title
+    slug
+  }
+}
+
+mutation DeleteBlog($id: ID!) {
+  deleteBlog(id: $id) {
+    id
+    title
+    slug
+  }
+}

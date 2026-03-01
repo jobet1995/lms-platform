@@ -1,0 +1,33 @@
+query GetBlogs {
+  blogs {
+    id
+    title
+    slug
+    excerpt
+    featuredImage
+    createdAt
+  }
+}
+
+query GetBlogBySlug($slug: String!) {
+  blog(slug: $slug) {
+    id
+    title
+    slug
+    excerpt
+    featuredImage
+    createdAt
+    content
+  }
+}
+
+query GetLatestBlogs($limit: Int) {
+  latestBlogs(limit: $limit) {
+    id
+    title
+    slug
+    excerpt
+    featuredImage
+    createdAt
+  }
+}

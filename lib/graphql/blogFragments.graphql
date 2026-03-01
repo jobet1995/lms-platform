@@ -1,0 +1,8 @@
+fragment BlogPreviewFields on Blog {
+  id
+  title
+  slug
+  excerpt
+  featuredImage
+  createdAt
+}
