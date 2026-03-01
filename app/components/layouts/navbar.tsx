@@ -3,7 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, BookOpen, ChevronDown, Cpu, Code2, Terminal, ShieldCheck } from "lucide-react";
+import { Menu, X, BookOpen, ChevronDown,
+  Cpu, Code2, Terminal, ShieldCheck, Palette, TrendingUp, Cloud,
+  Info, Users, Star, Newspaper,
+  PenLine, Lightbulb, Youtube,
+  Mail, MessageSquare, HelpCircle, Phone,
+} from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 
 interface SubLink {
@@ -27,35 +32,152 @@ const navLinks: NavLink[] = [
     href: "/courses",
     badge: "New",
     subLinks: [
-      { 
-        name: "Algorithms & DS", 
-        href: "/courses/algorithms", 
+      {
+        name: "Browse All Courses",
+        href: "/courses",
+        description: "Explore our full catalog of 500+ courses",
+        icon: <BookOpen size={18} className="text-primary" />,
+      },
+      {
+        name: "Development",
+        href: "/courses/development",
+        description: "Next.js, React, Python & more",
+        icon: <Code2 size={18} className="text-emerald-600" />,
+      },
+      {
+        name: "Data Science & AI",
+        href: "/courses/data-science",
+        description: "ML, neural networks & analytics",
+        icon: <Cpu size={18} className="text-fuchsia-600" />,
+      },
+      {
+        name: "Cybersecurity",
+        href: "/courses/cybersecurity",
+        description: "Ethical hacking & network safety",
+        icon: <ShieldCheck size={18} className="text-amber-600" />,
+      },
+      {
+        name: "Design",
+        href: "/courses/design",
+        description: "UI/UX, Figma & visual design",
+        icon: <Palette size={18} className="text-rose-500" />,
+      },
+      {
+        name: "DevOps & Cloud",
+        href: "/courses/devops",
+        description: "AWS, Terraform & CI/CD pipelines",
+        icon: <Cloud size={18} className="text-sky-500" />,
+      },
+      {
+        name: "Algorithms & DS",
+        href: "/courses/algorithms",
         description: "Core logic and data structures",
-        icon: <Terminal size={18} className="text-blue-600" />
+        icon: <Terminal size={18} className="text-blue-600" />,
       },
-      { 
-        name: "Software Engineering", 
-        href: "/courses/software-eng", 
-        description: "Build scalable system architectures",
-        icon: <Code2 size={18} className="text-emerald-600" />
+      {
+        name: "Marketing",
+        href: "/courses/marketing",
+        description: "SEO, growth hacking & analytics",
+        icon: <TrendingUp size={18} className="text-orange-500" />,
       },
-      { 
-        name: "Artificial Intelligence", 
-        href: "/courses/ai", 
-        description: "Neural networks & Machine Learning",
-        icon: <Cpu size={18} className="text-fuchsia-600" />
-      },
-      { 
-        name: "Cybersecurity", 
-        href: "/courses/security", 
-        description: "Ethical hacking and network safety",
-        icon: <ShieldCheck size={18} className="text-amber-600" />
-      },
-    ]
+    ],
   },
-  { name: "About", href: "/about" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+  {
+    name: "About",
+    href: "/about",
+    subLinks: [
+      {
+        name: "Our Mission",
+        href: "/about",
+        description: "Why we built ElevateLMS",
+        icon: <Lightbulb size={18} className="text-amber-500" />,
+      },
+      {
+        name: "The Team",
+        href: "/about#team",
+        description: "Meet the people behind the platform",
+        icon: <Users size={18} className="text-primary" />,
+      },
+      {
+        name: "Testimonials",
+        href: "/about#testimonials",
+        description: "What our students say",
+        icon: <Star size={18} className="text-amber-400" />,
+      },
+      {
+        name: "Press & Media",
+        href: "/about#press",
+        description: "News and media mentions",
+        icon: <Newspaper size={18} className="text-base-content/60" />,
+      },
+      {
+        name: "Careers",
+        href: "/about#careers",
+        description: "Join our growing team",
+        icon: <Info size={18} className="text-emerald-500" />,
+      },
+    ],
+  },
+  {
+    name: "Blog",
+    href: "/blog",
+    subLinks: [
+      {
+        name: "Latest Articles",
+        href: "/blog",
+        description: "Fresh reads from our editorial team",
+        icon: <PenLine size={18} className="text-primary" />,
+      },
+      {
+        name: "Tutorials",
+        href: "/blog/tutorials",
+        description: "Step-by-step developer guides",
+        icon: <Code2 size={18} className="text-emerald-600" />,
+      },
+      {
+        name: "Tech Insights",
+        href: "/blog/tech",
+        description: "Trends & deep dives in technology",
+        icon: <Lightbulb size={18} className="text-amber-500" />,
+      },
+      {
+        name: "Video Lessons",
+        href: "/blog/videos",
+        description: "Free video content & screencasts",
+        icon: <Youtube size={18} className="text-rose-500" />,
+      },
+    ],
+  },
+  {
+    name: "Contact",
+    href: "/contact",
+    subLinks: [
+      {
+        name: "Send a Message",
+        href: "/contact",
+        description: "Reach out to our support team",
+        icon: <Mail size={18} className="text-primary" />,
+      },
+      {
+        name: "Live Chat",
+        href: "/contact#chat",
+        description: "Chat with us in real time",
+        icon: <MessageSquare size={18} className="text-emerald-500" />,
+      },
+      {
+        name: "FAQ",
+        href: "/contact#faq",
+        description: "Quick answers to common questions",
+        icon: <HelpCircle size={18} className="text-amber-500" />,
+      },
+      {
+        name: "Call Us",
+        href: "/contact#phone",
+        description: "Speak to a team member directly",
+        icon: <Phone size={18} className="text-base-content/60" />,
+      },
+    ],
+  },
 ];
 
 const DesktopNavLink: React.FC<{ link: NavLink; pathname: string }> = ({ link, pathname }) => {
@@ -64,9 +186,10 @@ const DesktopNavLink: React.FC<{ link: NavLink; pathname: string }> = ({ link, p
   if (link.subLinks) {
     return (
       <div className="dropdown dropdown-hover group">
-        <div
+        {/* Clickable link + chevron indicator */}
+        <Link
+          href={link.href}
           tabIndex={0}
-          role="button"
           className={`relative text-sm font-semibold tracking-wide flex items-center gap-1.5 whitespace-nowrap transition-premium py-2 ${
             isActive ? "text-primary" : "text-base-content/70 hover:text-primary"
           }`}
@@ -81,10 +204,22 @@ const DesktopNavLink: React.FC<{ link: NavLink; pathname: string }> = ({ link, p
           {isActive && (
             <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-primary rounded-full transition-all duration-300" />
           )}
-        </div>
-        <div className="dropdown-content z-[1] pt-2 w-[340px] translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
+        </Link>
+        <div className={`dropdown-content z-[1] pt-2 translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto ${
+          link.subLinks.length > 4 ? 'w-[680px] -left-48' : 'w-[340px]'
+        }`}>
           <div className="dropdown-box shadow-2xl rounded-2xl p-4 overflow-hidden shadow-black/10">
-            <div className="grid gap-1">
+            {link.subLinks.length > 4 && (
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-base-content/8">
+                <p className="text-xs font-bold uppercase tracking-widest text-base-content/40">
+                  Browse by Category
+                </p>
+                <Link href={link.href} className="text-xs font-bold text-primary hover:underline">
+                  View All →
+                </Link>
+              </div>
+            )}
+            <div className={`grid gap-1 ${link.subLinks.length > 4 ? 'grid-cols-2' : 'grid-cols-1'}`}>
               {link.subLinks.map((sub) => (
                 <Link
                   key={sub.name}
@@ -143,33 +278,39 @@ const MobileNavLink: React.FC<{ link: NavLink; pathname: string; onClose: () => 
   if (link.subLinks) {
     return (
       <div className="flex flex-col space-y-1">
-        <button
-          onClick={() => setIsSubExpanded(!isSubExpanded)}
-          className={`px-4 py-3 rounded-xl flex items-center justify-between transition-all ${
-            isActive
-              ? "bg-primary text-primary-content font-bold shadow-lg shadow-primary/20"
-              : "text-base-content/90 hover:bg-base-300 hover:text-primary"
-          }`}
-        >
-          <div className="flex items-center gap-2">
+        {/* Row: clickable label + chevron expand button */}
+        <div className={`flex items-center rounded-2xl transition-all ${
+          isActive ? "bg-primary/10 text-primary font-bold border border-primary/20 shadow-sm shadow-primary/5" : "text-base-content/90 hover:bg-white/5"
+        }`}>
+          <Link
+            href={link.href}
+            onClick={onClose}
+            className="flex-1 flex items-center gap-2 px-4 py-3"
+          >
             {link.name}
             {link.badge && (
               <span className={`badge badge-sm ${isActive ? "badge-outline border-white/30" : "badge-primary"}`}>
                 {link.badge}
               </span>
             )}
-          </div>
-          <ChevronDown size={18} className={`transition-transform duration-300 ${isSubExpanded ? "rotate-180" : ""}`} />
-        </button>
-        <div className={`overflow-hidden transition-all duration-300 flex flex-col pl-4 space-y-1 ${isSubExpanded ? "max-h-[400px] mt-1 mb-2" : "max-h-0"}`}>
+          </Link>
+          <button
+            onClick={() => setIsSubExpanded(!isSubExpanded)}
+            aria-label="Toggle submenu"
+            className="px-3 py-3"
+          >
+            <ChevronDown size={18} className={`transition-transform duration-300 ${isSubExpanded ? "rotate-180" : ""}`} />
+          </button>
+        </div>
+        <div className={`overflow-hidden transition-all duration-300 flex flex-col pl-4 space-y-1 ${isSubExpanded ? "max-h-[1000px] mt-1 mb-2" : "max-h-0"}`}>
           {link.subLinks.map((sub) => (
             <Link
               key={sub.name}
               href={sub.href}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-3 transition-all ${
-                pathname === sub.href 
-                  ? "text-primary font-bold bg-primary/10" 
-                  : "text-base-content/60 hover:text-primary hover:bg-base-300/50"
+              className={`px-4 py-2.5 rounded-2xl flex items-center gap-3 transition-all ${
+                pathname === sub.href
+                  ? "text-primary font-bold bg-primary/10 border border-primary/10"
+                  : "text-base-content/60 hover:text-primary hover:bg-white/5"
               }`}
               onClick={onClose}
             >
@@ -187,10 +328,10 @@ const MobileNavLink: React.FC<{ link: NavLink; pathname: string; onClose: () => 
   return (
     <Link
       href={link.href}
-      className={`px-4 py-3 rounded-xl flex items-center justify-between transition-all ${
+      className={`px-4 py-3 rounded-2xl flex items-center justify-between transition-all ${
         isActive
-          ? "bg-primary text-primary-content font-bold shadow-lg shadow-primary/20"
-          : "text-base-content/90 hover:bg-base-300 hover:text-primary"
+          ? "bg-primary/10 text-primary font-bold border border-primary/20 shadow-sm shadow-primary/5"
+          : "text-base-content/90 hover:bg-white/5 hover:text-primary"
       }`}
       onClick={onClose}
     >
@@ -289,17 +430,25 @@ export const Navbar: React.FC = () => {
           </div>
         </nav>
 
+        {/* Mobile Background Overlay */}
+        {isOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-md lg:hidden transition-opacity duration-500 animate-in fade-in"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+
         {/* Mobile Navigation Menu */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0 m-0"
+          className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out relative z-50 ${
+            isOpen ? "max-h-[85vh] opacity-100 mt-4" : "max-h-0 opacity-0 m-0"
           }`}
         >
-          <div className="bg-base-200/50 backdrop-blur-lg rounded-2xl border border-base-content/5 p-4 flex flex-col space-y-4 shadow-xl">
+          <div className="bg-base-100/40 backdrop-blur-[40px] saturate-[250%] rounded-[32px] border border-white/10 p-4 flex flex-col space-y-3 shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-y-auto max-h-[80vh] scrollbar-hide">
             {navLinks.map((link) => (
               <MobileNavLink key={link.name} link={link} pathname={pathname} onClose={() => setIsOpen(false)} />
             ))}
-            <div className="divider opacity-10 m-2"></div>
+            <div className="divider opacity-5 m-1"></div>
             <div className="flex flex-col space-y-3 pt-2">
               <Link
                 href="/login"
