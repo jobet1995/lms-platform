@@ -4,7 +4,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import CourseList from '../CourseList';
 import { Course } from '../CourseCard';
-import FeaturesSection from '../FeaturesSection';
+import SectionTitle from '../SectionTitle';
 
 const defaultCourses: Course[] = [
   {
@@ -89,23 +89,25 @@ const CoursesSection: React.FC<CoursesSectionProps> = ({
   courses = defaultCourses
 }) => {
   return (
-    <FeaturesSection
-      title={title}
-      subtitle={subtitle}
-      tag={tag}
-      background="subtle"
-      id="courses"
-    >
-      <CourseList courses={courses} layout="grid" className="lg:grid-cols-4 xl:grid-cols-4" />
+    <section id="courses" className="py-24 sm:py-32 bg-base-100">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-16">
+        <SectionTitle
+          title={title}
+          subtitle={subtitle}
+          tag={tag}
+          alignment="center"
+        />
+        <CourseList courses={courses} layout="grid" className="lg:grid-cols-4 xl:grid-cols-4" />
 
-      {/* Footer CTA */}
-      <div className="mt-16 flex justify-center">
-        <button className="group flex items-center gap-2 text-lg font-bold text-primary transition-all hover:gap-4">
-          Browse all courses
-          <ArrowRight className="h-5 w-5" />
-        </button>
+        {/* Footer CTA */}
+        <div className="mt-16 flex justify-center">
+          <button className="group flex items-center gap-2 text-lg font-bold text-primary transition-all hover:gap-4">
+            Browse all courses
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        </div>
       </div>
-    </FeaturesSection>
+    </section>
   );
 };
 

@@ -14,6 +14,7 @@ interface CTAButtonProps {
   ariaLabel?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 const CTAButton: React.FC<CTAButtonProps> = ({
@@ -26,9 +27,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   iconPosition = 'right',
   ariaLabel,
   size = 'md',
-  type = 'button'
+  type = 'button',
+  disabled = false
 }) => {
-  const baseStyles = "inline-flex items-center justify-center font-bold transition-all duration-300 rounded-xl active:scale-95 group focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "inline-flex items-center justify-center font-bold transition-all duration-300 rounded-xl active:scale-95 group focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
   
   const sizeStyles = {
     sm: "px-4 py-2 text-xs",
@@ -54,6 +56,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   const commonProps = {
     className: `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`,
     'aria-label': ariaLabel || text,
+    disabled: href ? undefined : disabled
   };
 
   if (href) {

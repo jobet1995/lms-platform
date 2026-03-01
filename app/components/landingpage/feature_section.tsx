@@ -66,7 +66,7 @@ const FeatureSection: React.FC = () => {
       title="Everything you need to master your journey."
       subtitle="ElevateLMS is more than just a course platform. We provide the tools and community support to ensure your growth from beginner to expert."
       tag="Our Key Features"
-      background="subtle"
+      background="default"
     >
       <FeatureList features={features} columns={3} />
     </FeaturesSection>

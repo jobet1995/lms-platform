@@ -3,7 +3,7 @@
 import React from 'react';
 import TestimonialList from '../TestimonialList';
 import { Testimonial } from '../TestimonialCard';
-import FeaturesSection from '../FeaturesSection';
+import SectionTitle from '../SectionTitle';
 
 const testimonials: Testimonial[] = [
   {
@@ -34,15 +34,17 @@ const testimonials: Testimonial[] = [
 
 const TestimonialSection: React.FC = () => {
   return (
-    <FeaturesSection
-      title="Trusted by thousands of developers worldwide."
-      subtitle="Don't just take our word for it. Join the community and experience the most comprehensive LMS for programming and tech skills."
-      tag="Student Success Stories"
-      background="subtle"
-      id="testimonials"
-    >
-      <TestimonialList testimonials={testimonials} columns={3} />
-    </FeaturesSection>
+    <section id="testimonials" className="py-24 sm:py-32 bg-base-100">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-16">
+        <SectionTitle
+          title="Trusted by thousands of developers worldwide."
+          subtitle="Don't just take our word for it. Join the community and experience the most comprehensive LMS for programming and tech skills."
+          tag="Student Success Stories"
+          alignment="center"
+        />
+        <TestimonialList testimonials={testimonials} columns={3} />
+      </div>
+    </section>
   );
 };
 
