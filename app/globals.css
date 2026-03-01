@@ -29,6 +29,19 @@
   filter: invert(1);
 }
 
+/* Dropdown Theme Stability - Support for inner box pattern */
+.dropdown-box {
+  background-color: var(--color-base-100);
+  border: 1px solid color-mix(in srgb, var(--color-base-content) 10%, transparent);
+  color: var(--color-base-content);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme='dark'] .dropdown-box {
+  background-color: #121212 !important; /* Elevate from the black background */
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 /* Base style resets and layout fixes */
 body {
   min-height: 100vh;
