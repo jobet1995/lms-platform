@@ -21,22 +21,27 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="pt-20">
+    <main>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 py-20 px-6 sm:px-12 text-center">
-        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
-          <Mail className="h-4 w-4" /> Contact Us
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-base-content mb-4">
-          We&apos;d love to
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> hear from you</span>
-        </h1>
-        <p className="text-base-content/60 max-w-xl mx-auto">Have a question, suggestion, or want to collaborate? Reach out — we typically reply within 24 hours.</p>
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 min-h-[calc(100vh-80px)] flex items-center justify-center px-6 sm:px-12 text-center">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
+        <div className="relative max-w-3xl mx-auto -mt-16 sm:-mt-24">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+            <Mail className="h-4 w-4" /> Contact Us
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-base-content mb-4">
+            We&apos;d love to
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> hear from you</span>
+          </h1>
+          <p className="text-base-content/60 max-w-xl mx-auto text-lg leading-relaxed">
+            Have a question, suggestion, or want to collaborate? Reach out — we typically reply within 24 hours.
+          </p>
+        </div>
       </section>
 
       {/* Contact cards */}
-      <section className="container mx-auto px-6 sm:px-12 py-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+      <section className="container mx-auto px-6 sm:px-12 pt-4 pb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             { icon: <Mail className="h-6 w-6 text-primary" />, title: 'Email', detail: 'hello@elevatelms.io', id: 'contact-form' },
             { icon: <MessageSquare className="h-6 w-6 text-emerald-500" />, title: 'Live Chat', detail: 'Available 9AM–6PM (Mon–Fri)', id: 'chat' },
@@ -152,7 +157,7 @@ export default function ContactPage() {
         </div>
 
         {/* FAQ */}
-        <section id="faq" className="mt-16">
+        <section id="faq" className="mt-4">
           <h2 className="text-2xl font-extrabold text-base-content mb-6">Frequently Asked Questions</h2>
           <div className="space-y-3 max-w-2xl">
             {FAQS.map((faq, i) => (

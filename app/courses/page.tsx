@@ -5,138 +5,17 @@ import { useSearchParams } from 'next/navigation';
 import { SlidersHorizontal, LayoutGrid, List } from 'lucide-react';
 // Shared course components
 import CourseList from '../components/CourseList';
-import { Course } from '../components/CourseCard';
 
 // Page-specific components
 import CourseSearch from '../components/courses/CourseSearch';
-import CourseCategoryFilter, { Category } from '../components/courses/CourseCategoryFilter';
+import CourseCategoryFilter from '../components/courses/CourseCategoryFilter';
 import CourseFilterSidebar, { FilterState } from '../components/courses/CourseFilterSidebar';
 import CourseFilterDrawer from '../components/courses/CourseFilterDrawer';
 import CourseSortDropdown, { SortOption } from '../components/courses/CourseSortDropdown';
 
-// ─── Sample Data ──────────────────────────────────────────────────────────────
-
-const ALL_COURSES: Course[] = [
-  {
-    id: '1',
-    title: 'Advanced Web Development with Next.js 14',
-    description: 'Master the latest features of Next.js 14, Server Components, Server Actions, and the App Router.',
-    category: 'Development',
-    instructor: { name: 'Alex Rivers', role: 'Senior Web Architect', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.9, students: 1250, duration: '12h 30m',
-    image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=800',
-    badge: 'Bestseller', difficulty: 'Advanced',
-  },
-  {
-    id: '2',
-    title: 'UI/UX Design Masterclass 2026',
-    description: 'Create stunning user interfaces and seamless experiences. From wireframing to prototyping with Figma.',
-    category: 'Design',
-    instructor: { name: 'Sarah Jenkins', role: 'Product Designer', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.8, students: 840, duration: '10h 15m',
-    image: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800',
-    difficulty: 'Intermediate',
-  },
-  {
-    id: '3',
-    title: 'Data Science & Machine Learning Bootcamp',
-    description: 'Dive deep into data analysis, visualization, and predictive modeling using Python, Pandas, and Scikit-Learn.',
-    category: 'Data Science',
-    instructor: { name: 'Dr. Michael Chen', role: 'Data Scientist', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.7, students: 2100, duration: '24h 45m',
-    image: 'https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800',
-    badge: 'New', difficulty: 'Beginner',
-  },
-  {
-    id: '4',
-    title: 'Full-Stack Cybersecurity Mastery',
-    description: 'Learn network security, ethical hacking, and secure application development to protect data from modern threats.',
-    category: 'Cybersecurity',
-    instructor: { name: 'James Wilson', role: 'Security Analyst', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.8, students: 1560, duration: '18h 20m',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
-    difficulty: 'Intermediate',
-  },
-  {
-    id: '5',
-    title: 'Python for Beginners: Zero to Hero',
-    description: 'Start your programming journey with Python. Covers fundamentals, OOP, file handling, and mini projects.',
-    category: 'Development',
-    instructor: { name: 'Emma Larson', role: 'Software Engineer', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.6, students: 3200, duration: '8h 10m',
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800',
-    badge: 'Popular', difficulty: 'Beginner',
-  },
-  {
-    id: '6',
-    title: 'Digital Marketing & Growth Hacking',
-    description: 'Master SEO, paid ads, email marketing, and analytics funnels to grow your business online.',
-    category: 'Marketing',
-    instructor: { name: 'Rahul Sharma', role: 'Growth Marketer', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.5, students: 980, duration: '6h 50m',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
-    difficulty: 'Beginner',
-  },
-  {
-    id: '7',
-    title: 'Cloud Architecture with AWS & Terraform',
-    description: 'Design and deploy scalable, fault-tolerant systems using AWS services and Infrastructure-as-Code.',
-    category: 'DevOps',
-    instructor: { name: 'Priya Nair', role: 'Cloud Architect', avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.9, students: 720, duration: '22h 0m',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
-    badge: 'Hot', difficulty: 'Advanced',
-  },
-  {
-    id: '8',
-    title: 'React Native: Build Mobile Apps Fast',
-    description: 'Create production-ready iOS and Android apps with React Native, Expo, and modern navigation patterns.',
-    category: 'Development',
-    instructor: { name: 'Carlos Diaz', role: 'Mobile Developer', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200' },
-    rating: 4.7, students: 1340, duration: '14h 30m',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800',
-    difficulty: 'Intermediate',
-  },
-];
-
-const CATEGORIES: Category[] = [
-  { id: 'all', label: 'All Courses', count: ALL_COURSES.length },
-  { id: 'Development', label: 'Development', count: ALL_COURSES.filter(c => c.category === 'Development').length },
-  { id: 'Design', label: 'Design', count: ALL_COURSES.filter(c => c.category === 'Design').length },
-  { id: 'Data Science', label: 'Data Science', count: ALL_COURSES.filter(c => c.category === 'Data Science').length },
-  { id: 'Cybersecurity', label: 'Cybersecurity', count: ALL_COURSES.filter(c => c.category === 'Cybersecurity').length },
-  { id: 'Marketing', label: 'Marketing', count: ALL_COURSES.filter(c => c.category === 'Marketing').length },
-  { id: 'DevOps', label: 'DevOps', count: ALL_COURSES.filter(c => c.category === 'DevOps').length },
-];
-
-// ─── Duration helper ───────────────────────────────────────────────────────────
-
-function parseDurationHours(d: string): number {
-  const match = d.match(/(\d+)h/);
-  return match ? parseInt(match[1]) : 0;
-}
-
-function durationInBucket(d: string, buckets: string[]): boolean {
-  if (buckets.length === 0) return true;
-  const h = parseDurationHours(d);
-  return buckets.some((b) => {
-    if (b === 'lt2') return h < 2;
-    if (b === '2-5') return h >= 2 && h <= 5;
-    if (b === '5-10') return h > 5 && h <= 10;
-    if (b === 'gt10') return h > 10;
-    return false;
-  });
-}
-
-// ─── Default filter state ──────────────────────────────────────────────────────
-
-const DEFAULT_FILTERS: FilterState = {
-  difficulty: [],
-  duration: [],
-  minRating: null,
-};
-
-// ─── Page Content ─────────────────────────────────────────────────────────────
+// Data
+import { ALL_COURSES, COURSE_CATEGORIES as CATEGORIES } from '@/lib/data/mock';
+import { DEFAULT_FILTERS, durationInBucket } from '@/lib/utils/course-filters';
 
 function CoursesPageContent() {
   const searchParams = useSearchParams();

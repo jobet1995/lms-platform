@@ -5,6 +5,7 @@ import {
   BookOpen, GraduationCap, Globe, Heart,
   CheckCircle2, ArrowRight, Mail,
 } from 'lucide-react';
+import Image from 'next/image';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -96,11 +97,11 @@ const PRESS = [
 
 export default function AboutPage() {
   return (
-    <main className="pt-20">
+    <main>
       {/* ── Mission Hero ── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 py-24 px-6 sm:px-12 text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 min-h-[calc(100vh-80px)] flex items-center justify-center px-6 sm:px-12 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
-        <div className="relative max-w-3xl mx-auto">
+        <div className="relative max-w-3xl mx-auto -mt-16 sm:-mt-24">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6">
             <Target className="h-4 w-4" /> Our Mission
           </span>
@@ -174,8 +175,7 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {TEAM.map((m) => (
               <div key={m.name} className="flex gap-4 p-5 rounded-2xl bg-base-100 border border-base-content/8 hover:shadow-xl transition-all">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.avatar} alt={m.name} className="w-14 h-14 rounded-full object-cover flex-shrink-0 ring-2 ring-primary/20" />
+                <Image src={m.avatar} alt={m.name} width={56} height={56} className="w-14 h-14 rounded-full object-cover flex-shrink-0 ring-2 ring-primary/20" />
                 <div>
                   <p className="font-bold text-base-content">{m.name}</p>
                   <p className="text-xs text-primary font-semibold mb-2">{m.role}</p>
@@ -196,8 +196,7 @@ export default function AboutPage() {
             <div key={t.name} className="flex flex-col gap-4 p-6 rounded-2xl bg-base-100 border border-base-content/8 shadow-sm hover:shadow-lg transition-all">
               <p className="text-sm text-base-content/75 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
               <div className="flex items-center gap-3 mt-auto">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                <Image src={t.avatar} alt={t.name} width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <p className="font-bold text-sm text-base-content">{t.name}</p>
                   <p className="text-xs text-base-content/50">{t.role}</p>

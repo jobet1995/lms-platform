@@ -62,9 +62,9 @@ const socialLinks = [
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-base-100 border-t border-base-content/5 pt-20 pb-10 mt-auto">
+    <footer className="w-full bg-base-100 border-t border-base-content/5 pt-8 pb-6 mt-auto">
       <div className="w-full max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-10">
           
           {/* Brand & Tagline */}
           <div className="lg:col-span-4 flex flex-col items-start gap-6">
@@ -150,7 +150,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-10 border-t border-base-content/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-6 border-t border-base-content/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm font-bold text-base-content/40 tracking-tight">
             &copy; 2026 <span className="text-base-content/60">ElevateLMS</span>. All rights reserved.
           </p>

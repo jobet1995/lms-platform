@@ -1,70 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { PenLine, Code2, Lightbulb, Youtube, Clock, ArrowRight, Tag } from 'lucide-react';
-
-interface Article {
-  id: string;
-  title: string;
-  excerpt: string;
-  category: 'Tutorial' | 'Tech' | 'Video' | 'News';
-  readTime: string;
-  date: string;
-  image: string;
-  author: { name: string; avatar: string };
-  tag?: string;
-}
-
-const ARTICLES: Article[] = [
-  {
-    id: '1', category: 'Tutorial',
-    title: 'Building a Full-Stack App with Next.js 16 & Prisma',
-    excerpt: 'Step-by-step guide to wiring up Next.js 16 server actions with Prisma ORM and a PostgreSQL database.',
-    readTime: '12 min', date: 'Feb 28, 2026',
-    image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'Alex Rivers', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200' },
-    tag: 'Featured',
-  },
-  {
-    id: '2', category: 'Tech',
-    title: 'The State of AI in 2026: What Developers Need to Know',
-    excerpt: 'A practical overview of LLMs, vector databases, and AI-assisted development tools shaping the industry.',
-    readTime: '8 min', date: 'Feb 25, 2026',
-    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'Dr. Michael Chen', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' },
-  },
-  {
-    id: '3', category: 'Tutorial',
-    title: 'Mastering Tailwind CSS v4: New Utilities & Best Practices',
-    excerpt: 'Everything you need to know about the latest Tailwind CSS release — config changes, new utilities, and performance wins.',
-    readTime: '10 min', date: 'Feb 20, 2026',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200' },
-  },
-  {
-    id: '4', category: 'Video',
-    title: 'React 19 Deep Dive: Server Actions & Concurrent Features',
-    excerpt: 'Watch and follow along as we explore React 19\'s most exciting additions with real-world examples.',
-    readTime: '25 min', date: 'Feb 18, 2026',
-    image: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'Alex Rivers', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200' },
-  },
-  {
-    id: '5', category: 'Tech',
-    title: 'Why Every Developer Should Learn TypeScript in 2026',
-    excerpt: 'The business case and technical benefits for adopting TypeScript across your entire codebase.',
-    readTime: '6 min', date: 'Feb 15, 2026',
-    image: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'Priya Nair', avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=200' },
-  },
-  {
-    id: '6', category: 'Tutorial',
-    title: 'Authentication in Next.js 16: NextAuth vs Clerk vs Auth.js',
-    excerpt: 'An honest comparison of the top auth solutions for Next.js apps — with benchmarks and recommendation.',
-    readTime: '14 min', date: 'Feb 10, 2026',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800',
-    author: { name: 'James Wilson', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200' },
-  },
-];
+import Image from 'next/image';
+import { ARTICLES, type Article } from '@/lib/data/mock';
 
 const CATEGORY_META = {
   Tutorial: { icon: <Code2 className="h-4 w-4" />, color: 'text-emerald-600 bg-emerald-500/10' },
@@ -77,10 +15,11 @@ function ArticleCard({ article, featured = false }: { article: Article; featured
   const meta = CATEGORY_META[article.category];
   return (
     <Link href={`/blog/${article.id}`} className={`group flex flex-col rounded-2xl border border-base-content/8 bg-base-100 overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all ${featured ? 'lg:flex-row' : ''}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={article.image}
         alt={article.title}
+        width={featured ? 800 : 400}
+        height={featured ? 450 : 250}
         className={`object-cover ${featured ? 'lg:w-1/2 h-56 lg:h-auto' : 'h-48'} w-full`}
       />
       <div className="flex flex-col gap-3 p-5 flex-1">
@@ -100,8 +39,7 @@ function ArticleCard({ article, featured = false }: { article: Article; featured
         <p className="text-sm text-base-content/60 leading-relaxed flex-1">{article.excerpt}</p>
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={article.author.avatar} alt={article.author.name} className="w-7 h-7 rounded-full object-cover" />
+            <Image src={article.author.avatar} alt={article.author.name} width={28} height={28} className="w-7 h-7 rounded-full object-cover" />
             <span className="text-xs font-medium text-base-content/60">{article.author.name}</span>
           </div>
           <span className="flex items-center gap-1 text-xs text-base-content/40">
@@ -118,7 +56,7 @@ export default function BlogPage() {
   const rest = ARTICLES.slice(1);
 
   return (
-    <main className="pt-20">
+    <main>
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 py-20 px-6 sm:px-12 text-center">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">

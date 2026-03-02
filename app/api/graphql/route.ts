@@ -1,54 +1,41 @@
 import { createSchema, createYoga } from 'graphql-yoga';
 
-interface Blog {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt?: string;
-  content: string;
-  featuredImage?: string;
-  author?: string;
-  createdAt: string;
-  updatedAt?: string;
-  published: boolean;
-}
-
-const blogs: Blog[] = [
-  {
-    id: '1',
-    title: 'Getting Started with Next.js 14',
-    slug: 'getting-started-nextjs-14',
-    excerpt: 'Learn the basics of Next.js 14 and the App Router.',
-    content: 'Next.js 14 introduces several new features including enhanced Server Components...',
-    featuredImage: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec',
-    author: 'Admin',
-    createdAt: new Date().toISOString(),
-    published: true,
-  },
-  {
-    id: '2',
-    title: 'GraphQL API with Yoga',
-    slug: 'graphql-api-yoga',
-    excerpt: 'A guide to building GraphQL APIs with Yoga and Next.js.',
-    content: 'GraphQL Yoga is a fully-featured GraphQL Server that focus on setup ease...',
-    featuredImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97',
-    author: 'Editor',
-    createdAt: new Date().toISOString(),
-    published: true,
-  },
-];
+import prisma from '@/lib/prisma';
 
 const typeDefs = `
+  type Author {
+    id: ID!
+    name: String!
+    avatar: String
+  }
+
   type Blog {
     id: ID!
     title: String!
     slug: String!
     excerpt: String
     content: String!
+    category: String!
+    readTime: String
     featuredImage: String
     author: String
+    authorDetails: Author
+    published: Boolean!
     createdAt: String!
     updatedAt: String
+  }
+
+  type Course {
+    id: ID!
+    title: String!
+    description: String
+    category: String
+    instructor: String
+    rating: Float
+    students: Int
+    duration: String
+    image: String
+    difficulty: String
     published: Boolean!
   }
 
@@ -56,14 +43,64 @@ const typeDefs = `
     blogs: [Blog!]!
     blog(slug: String!): Blog
     latestBlogs(limit: Int): [Blog!]!
+    courses: [Course!]!
+    course(id: ID!): Course
   }
 `;
 
 const resolvers = {
   Query: {
-    blogs: () => blogs,
-    blog: (_: unknown, { slug }: { slug: string }) => blogs.find((b) => b.slug === slug),
-    latestBlogs: (_: unknown, { limit }: { limit?: number }) => blogs.slice(0, limit || 5),
+    blogs: async () => {
+      const dbBlogs = await prisma.blogPost.findMany({
+        include: { author: true },
+        orderBy: { createdAt: 'desc' },
+      });
+      return dbBlogs.map((b) => ({
+        ...b,
+        author: b.author.name,
+        authorDetails: b.author,
+        createdAt: b.createdAt.toISOString(),
+        updatedAt: b.updatedAt?.toISOString(),
+      }));
+    },
+    blog: async (_: unknown, { slug }: { slug: string }) => {
+      const b = await prisma.blogPost.findUnique({
+        where: { slug },
+        include: { author: true },
+      });
+      if (!b) return null;
+      return {
+        ...b,
+        author: b.author.name,
+        authorDetails: b.author,
+        createdAt: b.createdAt.toISOString(),
+        updatedAt: b.updatedAt?.toISOString(),
+      };
+    },
+    latestBlogs: async (_: unknown, { limit }: { limit?: number }) => {
+      const dbBlogs = await prisma.blogPost.findMany({
+        include: { author: true },
+        take: limit || 5,
+        orderBy: { createdAt: 'desc' },
+      });
+      return dbBlogs.map((b) => ({
+        ...b,
+        author: b.author.name,
+        authorDetails: b.author,
+        createdAt: b.createdAt.toISOString(),
+        updatedAt: b.updatedAt?.toISOString(),
+      }));
+    },
+    courses: async () => {
+      return prisma.course.findMany({
+        where: { published: true }
+      });
+    },
+    course: async (_: unknown, { id }: { id: string }) => {
+      return prisma.course.findUnique({
+        where: { id }
+      });
+    },
   },
 };
 
