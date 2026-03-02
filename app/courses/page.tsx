@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import{ useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { SlidersHorizontal, LayoutGrid, List } from 'lucide-react';
 // Shared course components
@@ -136,9 +136,9 @@ const DEFAULT_FILTERS: FilterState = {
   minRating: null,
 };
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+// ─── Page Content ─────────────────────────────────────────────────────────────
 
-export default function CoursesPage() {
+function CoursesPageContent() {
   const searchParams = useSearchParams();
   const urlCategory = searchParams.get('category') ?? 'all';
 
@@ -362,5 +362,20 @@ export default function CoursesPage() {
         activeCount={activeFilterCount}
       />
     </>
+  );
+}
+
+export default function CoursesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-base-100">
+        <div className="flex flex-col items-center gap-4">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+          <p className="text-base-content/50 font-medium animate-pulse">Loading amazing courses...</p>
+        </div>
+      </div>
+    }>
+      <CoursesPageContent />
+    </Suspense>
   );
 }
